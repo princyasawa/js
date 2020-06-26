@@ -9,18 +9,21 @@ const instructor = Platform.select({
      'Shake or press menu button for dev menu',
 });
 
-// import Routes from './src/components/Routes'
-import Login from './src/pages/Login';
-import SignUp from './src/pages/Signup';
+import {Provider} from "react-redux";
+import{ PersistGate} from "redux-persist/integration/react";
+import Main from './src/Main';
+import persist  from './src/config/store';
+
+const persistStore = persist();
 
 export default function App () {
   return (
-    <View style={styles.container}>
-      <StatusBar
-      backgroundColor= "#1c313a"
-      barStyle= "light-content"/>
-      <SignUp />
-    </View>
+    <Provider store={persistStore.store}>
+      <PersistGate loading={null} persistor={persistStore.persistor}>
+      <Main />
+      </PersistGate>
+       
+      </Provider>
   );
 
 }
@@ -32,4 +35,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-})
+});
